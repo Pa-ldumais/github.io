@@ -9,14 +9,9 @@
 </head>
 <body>
     <header>
-        <div class="header-content">
-            <img src="{{ '/assets/img/logo.svg' | relative_url }}" alt="Solud" class="logo">
-            <p>Support informatique à La Tuque</p>
+        <div class="container">
+            <img src="{{ '/assets/img/logo.svg' | relative_url }}" alt="Solud Logo" class="logo">
         </div>
-        <nav>
-            <a href="{{ '/' | relative_url }}">Accueil</a> | 
-            <a href="{{ '/services' | relative_url }}">Services</a>
-        </nav>
     </header>
 
     <main>
@@ -24,8 +19,14 @@
     </main>
 
     <footer>
-        <p>© {{ 'now' | date: "%Y" }} {{ site.title }} — {{ site.email }}</p>
+        <div class="container">
+            <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }} - Services TI Professionnels - La Tuque, Québec</p>
+            {% if site.email %}
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                <a href="mailto:{{ site.email }}" style="color: #3b82f6; text-decoration: none;">{{ site.email }}</a>
+            </p>
+            {% endif %}
+        </div>
     </footer>
 </body>
 </html>
-
