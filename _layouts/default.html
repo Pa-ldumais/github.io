@@ -1,32 +1,60 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
-    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/animate.css' | relative_url }}">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title }} | {{ site.title }}</title>
+<link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
+<link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.querySelector("#theme-toggle");
+  toggle.onclick = () => {
+    document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme",
+      document.documentElement.classList.contains("dark") ? "dark" : "light");
+  };
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.classList.add("dark");
+  }
+});
+</script>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <img src="{{ '/assets/img/logo.svg' | relative_url }}" alt="Solud Logo" class="logo">
-        </div>
-    </header>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="{{ '/' | relative_url }}" class="brand">
+        <img src="{{ 'assets/img/logo.svg' | relative_url }}" alt="Solud" class="logo">
+        <span>Solud</span>
+      </a>
+    </div>
+    <div class="nav-right">
+      <a href="{{ '/' | relative_url }}">Accueil</a>
+      <a href="{{ '/services' | relative_url }}">Services</a>
+      <a href="{{ '/contact' | relative_url }}">Contact</a>
+      <button id="theme-toggle" aria-label="Basculer le thème">🌓</button>
+    </div>
+  </nav>
 
-    <main>
-        {{ content }}
-    </main>
+  <header class="hero fade-in">
+    <h1>Solutions TI à La Tuque</h1>
+    <p>Support, sécurité, réseau. Fiabilité locale.</p>
+    <a href="{{ '/contact' | relative_url }}" class="btn">Obtenir de l’aide</a>
+  </header>
 
-    <footer>
-        <div class="container">
-            <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }} - Services TI Professionnels - La Tuque, Québec</p>
-            {% if site.email %}
-            <p style="margin-top: 0.5rem; font-size: 0.9rem;">
-                <a href="mailto:{{ site.email }}" style="color: #3b82f6; text-decoration: none;">{{ site.email }}</a>
-            </p>
-            {% endif %}
-        </div>
-    </footer>
+  <main>
+    {{ content }}
+  </main>
+
+  <footer>
+    <p>© {{ site.title }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+  </footer>
+
+  <script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => e.isIntersecting && e.target.classList.add('visible'));
+  }, {threshold: 0.1});
+  document.querySelectorAll('.fade-in, .slide-up').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
