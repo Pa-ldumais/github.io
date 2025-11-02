@@ -6,56 +6,76 @@
 <title>{{ page.title }} | {{ site.title }}</title>
 <link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
 <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="brand">
+    <img src="{{ 'assets/img/logo.svg' | relative_url }}" alt="Solud" class="logo">
+    <span>Solud</span>
+  </div>
+  <div class="nav-right">
+    <a href="{{ '/' | relative_url }}">Accueil</a>
+    <a href="{{ '/services' | relative_url }}">Services</a>
+    <a href="{{ '/contact' | relative_url }}">Contact</a>
+    <button id="theme-toggle" aria-label="Basculer le thème">🌓</button>
+  </div>
+</nav>
+
+<header class="hero fade-in">
+  <div class="hero-overlay"></div>
+  <h1>Solutions TI à La Tuque</h1>
+  <p>La technologie ancrée dans la forêt — un soutien local, moderne et fiable.</p>
+  <a href="mailto:{{ site.email }}" class="btn">Écrivez-nous</a>
+
+  <div class="social-banner">
+    <a href="https://bsky.app/profile/solud.dev" target="_blank" aria-label="BlueSky">
+      <img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky">
+    </a>
+    <a href="https://x.com/SoludDev" target="_blank" aria-label="X (Twitter)">
+      <img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X">
+    </a>
+  </div>
+</header>
+
+<main>
+  {{ content }}
+</main>
+
+<footer class="fade-in">
+  <p>© {{ site.title }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+  <div class="socials">
+    <a href="https://bsky.app/profile/solud.dev" target="_blank"><img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky"></a>
+    <a href="https://x.com/SoludDev" target="_blank"><img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X"></a>
+  </div>
+</footer>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.querySelector("#theme-toggle");
-  toggle.onclick = () => {
-    document.documentElement.classList.toggle("dark");
-    localStorage.setItem("theme",
-      document.documentElement.classList.contains("dark") ? "dark" : "light");
-  };
-  if (localStorage.getItem("theme") === "dark") {
-    document.documentElement.classList.add("dark");
+  if (toggle) {
+    toggle.onclick = () => {
+      document.documentElement.classList.toggle("dark");
+      localStorage.setItem("theme",
+        document.documentElement.classList.contains("dark") ? "dark" : "light");
+    };
+    if (localStorage.getItem("theme") === "dark") {
+      document.documentElement.classList.add("dark");
+    }
   }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll(".fade-in, .slide-up, .card").forEach(el => observer.observe(el));
 });
 </script>
-</head>
-<body>
-  <nav class="navbar">
-    <div class="nav-left">
-      <a href="{{ '/' | relative_url }}" class="brand">
-        <img src="{{ 'assets/img/logo.svg' | relative_url }}" alt="Solud" class="logo">
-        <span>Solud</span>
-      </a>
-    </div>
-    <div class="nav-right">
-      <a href="{{ '/' | relative_url }}">Accueil</a>
-      <a href="{{ '/services' | relative_url }}">Services</a>
-      <button id="theme-toggle" aria-label="Basculer le thème">🌓</button>
-    </div>
-  </nav>
 
-  <header class="hero fade-in">
-    <h1>Solutions TI à La Tuque</h1>
-    <p>Support, sécurité, réseau. Fiabilité locale.</p>
-   <a href="mailto:{{ site.email }}" class="btn">Obtenir de l’aide</a>
-  </header>
-
-  <main>
-    {{ content }}
-  </main>
-
-  <footer>
-    <p>© {{ site.title }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
-  </footer>
-
-  <script>
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => e.isIntersecting && e.target.classList.add('visible'));
-  }, {threshold: 0.1});
-  document.querySelectorAll('.fade-in, .slide-up').forEach(el => observer.observe(el));
-  </script>
 </body>
 </html>
-
-
