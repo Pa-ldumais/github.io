@@ -13,18 +13,9 @@ title: Accueil
 <section class="slide-up">
 <h2>Nos expertises</h2>
 <div class="grid">
-  <div class="card">
-    <h3>Support TI</h3>
-    <p>Dépannage, maintenance et configuration de vos équipements.</p>
-  </div>
-  <div class="card">
-    <h3>Réseaux</h3>
-    <p>Installation et amélioration de vos réseaux filaires et sans fil.</p>
-  </div>
-  <div class="card">
-    <h3>Cybersécurité</h3>
-    <p>Protection, sauvegardes et prévention contre les menaces numériques.</p>
-  </div>
+  <div class="card"><h3>Support TI</h3><p>Dépannage, maintenance et configuration de vos équipements.</p></div>
+  <div class="card"><h3>Réseaux</h3><p>Installation et amélioration de vos réseaux filaires et sans fil.</p></div>
+  <div class="card"><h3>Cybersécurité</h3><p>Protection, sauvegardes et prévention contre les menaces numériques.</p></div>
 </div>
 </section>
 
