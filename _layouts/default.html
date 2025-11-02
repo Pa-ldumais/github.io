@@ -4,12 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ page.title }} | {{ site.title }}</title>
+
+<!-- Jekyll-safe asset variables -->
+<style>
+  :root {
+    --forest-silhouette: url("{{ '/assets/img/forest-silhouette.svg' | relative_url }}");
+  }
+</style>
+
 <link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
 <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
 </head>
+
 <body>
 
-<nav class="navbar">
+<nav class="navbar fade-in">
   <div class="brand">
     <img src="{{ 'assets/img/logo.svg' | relative_url }}" alt="Solud" class="logo">
     <span>Solud</span>
@@ -17,6 +26,8 @@
   <div class="nav-right">
     <a href="{{ '/' | relative_url }}">Accueil</a>
     <a href="{{ '/services' | relative_url }}">Services</a>
+    <a href="{{ '/actualites' | relative_url }}">Actualités</a>
+    <a href="{{ '/contact' | relative_url }}">Contact</a>
     <button id="theme-toggle" aria-label="Basculer le thème">🌓</button>
   </div>
 </nav>
@@ -28,12 +39,8 @@
   <a href="mailto:{{ site.email }}" class="btn">Écrivez-nous</a>
 
   <div class="social-banner">
-    <a href="https://bsky.app/profile/solud.dev" target="_blank" aria-label="BlueSky">
-      <img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky">
-    </a>
-    <a href="https://x.com/SoludDev" target="_blank" aria-label="X (Twitter)">
-      <img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X">
-    </a>
+    <a href="https://bsky.app/profile/solud.dev" target="_blank"><img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky"></a>
+    <a href="https://x.com/SoludDev" target="_blank"><img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X"></a>
   </div>
 </header>
 
@@ -41,7 +48,7 @@
   {{ content }}
 </main>
 
-<footer class="fade-in">
+<footer>
   <p>© {{ site.title }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
   <div class="socials">
     <a href="https://bsky.app/profile/solud.dev" target="_blank"><img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky"></a>
@@ -63,19 +70,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach((entry)=>{
+      if(entry.isIntersecting){
         entry.target.classList.add("visible");
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll(".fade-in, .slide-up, .card").forEach(el => observer.observe(el));
+  },{threshold:0.15});
+  document.querySelectorAll(".fade-in,.slide-up,.card").forEach(el=>observer.observe(el));
 });
 </script>
 
 </body>
 </html>
-
