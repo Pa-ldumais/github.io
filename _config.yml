@@ -2,7 +2,17 @@ title: Solud
 description: Services TI professionnels à La Tuque
 baseurl: ""
 url: "https://solud.dev"
-theme: null
-markdown: kramdown
 author: "Pierre-Alexandre"
 email: "contact@solud.dev"
+markdown: kramdown
+
+collections:
+  posts:
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
