@@ -4,7 +4,18 @@ layout: default
 
 <article class="post slide-up">
   <h1>{{ page.title }}</h1>
-  <p class="post-meta">Publié le {{ page.date | date: "%d %B %Y" }}</p>
+  <p class="post-meta">
+    <time datetime="{{ page.date | date_to_xmlschema }}">
+      Publié le {{ page.date | date: "%d %B %Y" }}
+    </time>
+    {% if content %}
+      <span class="reading-time" aria-label="Temps de lecture estimé">
+        {% assign words = content | number_of_words %}
+        {% assign reading_time = words | divided_by: site.reading_speed %}
+        {% if reading_time < 1 %}1{% else %}{{ reading_time }}{% endif %} min de lecture
+      </span>
+    {% endif %}
+  </p>
   <div class="post-content">{{ content }}</div>
-  <a href="{{ '/actualites' | relative_url }}" class="btn">← Retour</a>
+  <a href="{{ '/actualites' | relative_url }}" class="btn">← Retour aux actualités</a>
 </article>
