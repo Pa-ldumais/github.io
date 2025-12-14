@@ -4,6 +4,49 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ page.title }} | {{ site.title }}</title>
+<meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+<meta name="author" content="{{ site.author }}">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:title" content="{{ page.title }} | {{ site.title }}">
+<meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+<meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+<meta property="og:url" content="{{ page.url | replace:'index.html','' | absolute_url }}">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:locale" content="{{ site.locale }}">
+<meta property="og:image" content="{{ '/assets/img/logo.svg' | absolute_url }}">
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@SoludDev">
+<meta name="twitter:title" content="{{ page.title }} | {{ site.title }}">
+<meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+<meta name="twitter:image" content="{{ '/assets/img/logo.svg' | absolute_url }}">
+
+<!-- JSON-LD Structured Data for Local Business -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "{{ site.business.name }}",
+  "description": "{{ site.description }}",
+  "url": "{{ site.url }}",
+  "email": "{{ site.email }}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "{{ site.business.city }}",
+    "addressRegion": "{{ site.business.region }}",
+    "addressCountry": "{{ site.business.country }}"
+  },
+  "sameAs": [
+    "{{ site.social.bluesky }}",
+    "{{ site.social.twitter }}"
+  ]
+}
+</script>
 
 <!-- Jekyll-safe asset variables -->
 <style>
@@ -18,57 +61,130 @@
 
 <body>
 
-<nav class="navbar fade-in">
+<!-- Skip to content link for screen readers -->
+<a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
+
+<nav class="navbar fade-in" role="navigation" aria-label="Navigation principale">
   <div class="brand">
-    <img src="{{ 'assets/img/logo.svg' | relative_url }}" alt="Solud" class="logo">
+    <img src="{{ 'assets/img/logo.svg' | relative_url }}" alt="Logo Solud" class="logo">
     <span>Solud</span>
   </div>
-  <div class="nav-right">
-    <a href="{{ '/' | relative_url }}">Accueil</a>
-    <a href="{{ '/services' | relative_url }}">Services</a>
-    <a href="{{ '/actualites' | relative_url }}">Actualités</a>
-    <button id="theme-toggle" aria-label="Basculer le thème">🌓</button>
+  <button class="hamburger" id="mobile-menu-toggle" aria-label="Basculer le menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="nav-right" id="nav-menu">
+    <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active" aria-current="page"{% endif %}>Accueil</a>
+    <a href="{{ '/services' | relative_url }}" {% if page.url contains 'services' %}class="active" aria-current="page"{% endif %}>Services</a>
+    <a href="{{ '/actualites' | relative_url }}" {% if page.url contains 'actualites' %}class="active" aria-current="page"{% endif %}>Actualités</a>
+    <button id="theme-toggle" aria-label="Basculer entre thème clair et thème sombre" aria-pressed="false">
+      <span class="theme-icon" aria-hidden="true">🌓</span>
+    </button>
   </div>
 </nav>
 
-<header class="hero fade-in">
+<header class="hero fade-in" role="banner">
   <div class="hero-overlay"></div>
   <h1>Solutions TI à La Tuque</h1>
   <p>La technologie ancrée dans la forêt — un soutien local, moderne et fiable.</p>
-  <a href="mailto:{{ site.email }}" class="btn">Écrivez-nous</a>
+  <a href="mailto:{{ site.email }}" class="btn btn-primary">Écrivez-nous</a>
 
-  <div class="social-banner">
-    <a href="https://bsky.app/profile/solud.dev" target="_blank"><img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky"></a>
-    <a href="https://x.com/SoludDev" target="_blank"><img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X"></a>
+  <div class="social-banner" role="navigation" aria-label="Réseaux sociaux">
+    <a href="{{ site.social.bluesky }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur BlueSky">
+      <img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky">
+    </a>
+    <a href="{{ site.social.twitter }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur X (Twitter)">
+      <img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X">
+    </a>
   </div>
 </header>
 
-<main>
+<main id="main-content">
   {{ content }}
 </main>
 
-<footer>
+<footer role="contentinfo">
   <p>© {{ site.title }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
-  <div class="socials">
-    <a href="https://bsky.app/profile/solud.dev" target="_blank"><img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky"></a>
-    <a href="https://x.com/SoludDev" target="_blank"><img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X"></a>
+  <div class="socials" role="navigation" aria-label="Liens vers réseaux sociaux">
+    <a href="{{ site.social.bluesky }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur BlueSky">
+      <img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky">
+    </a>
+    <a href="{{ site.social.twitter }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur X (Twitter)">
+      <img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X">
+    </a>
   </div>
 </footer>
 
+<!-- Scroll to top button -->
+<button id="scroll-to-top" aria-label="Retour en haut de la page" title="Retour en haut">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M12 19V5M5 12l7-7 7 7"/>
+  </svg>
+</button>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  // Theme toggle
   const toggle = document.querySelector("#theme-toggle");
   if (toggle) {
-    toggle.onclick = () => {
-      document.documentElement.classList.toggle("dark");
-      localStorage.setItem("theme",
-        document.documentElement.classList.contains("dark") ? "dark" : "light");
+    const updateTheme = (isDark) => {
+      document.documentElement.classList.toggle("dark", isDark);
+      toggle.setAttribute("aria-pressed", isDark ? "true" : "false");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
     };
-    if (localStorage.getItem("theme") === "dark") {
-      document.documentElement.classList.add("dark");
-    }
+    
+    toggle.onclick = () => {
+      const isDark = !document.documentElement.classList.contains("dark");
+      updateTheme(isDark);
+    };
+    
+    // Initialize theme
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    updateTheme(savedTheme === "dark" || (!savedTheme && prefersDark));
   }
 
+  // Mobile menu toggle
+  const hamburger = document.querySelector("#mobile-menu-toggle");
+  const navMenu = document.querySelector("#nav-menu");
+  if (hamburger && navMenu) {
+    hamburger.onclick = () => {
+      const isOpen = hamburger.classList.toggle("active");
+      navMenu.classList.toggle("active");
+      hamburger.setAttribute("aria-expanded", isOpen);
+      document.body.style.overflow = isOpen ? "hidden" : "";
+    };
+    
+    // Close menu when clicking nav links
+    navMenu.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        hamburger.classList.remove("active");
+        navMenu.classList.remove("active");
+        hamburger.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+      });
+    });
+  }
+
+  // Scroll to top button
+  const scrollBtn = document.querySelector("#scroll-to-top");
+  if (scrollBtn) {
+    const toggleScrollBtn = () => {
+      if (window.pageYOffset > 300) {
+        scrollBtn.classList.add("visible");
+      } else {
+        scrollBtn.classList.remove("visible");
+      }
+    };
+    
+    window.addEventListener("scroll", toggleScrollBtn);
+    scrollBtn.onclick = () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+  }
+
+  // Intersection observer for animations
   const observer = new IntersectionObserver((entries)=>{
     entries.forEach((entry)=>{
       if(entry.isIntersecting){
@@ -77,6 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   },{threshold:0.15});
+  
   document.querySelectorAll(".fade-in,.slide-up,.card").forEach(el=>observer.observe(el));
 });
 </script>

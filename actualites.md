@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Actualités
+description: Découvrez les dernières nouvelles et conseils TI de Solud, ancrés dans la région de La Tuque.
 ---
 
 <section class="slide-up">
