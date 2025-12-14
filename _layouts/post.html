@@ -9,9 +9,9 @@ layout: default
       Publié le {{ page.date | date: "%d %B %Y" }}
     </time>
     {% if content %}
-      <span class="reading-time">
+      <span class="reading-time" aria-label="Temps de lecture estimé">
         {% assign words = content | number_of_words %}
-        {% assign reading_time = words | divided_by: 200 %}
+        {% assign reading_time = words | divided_by: site.reading_speed %}
         {% if reading_time < 1 %}1{% else %}{{ reading_time }}{% endif %} min de lecture
       </span>
     {% endif %}

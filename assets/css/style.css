@@ -74,8 +74,10 @@ body {
 }
 
 /* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Typography */
@@ -114,9 +116,10 @@ a:focus-visible {
   border-radius: 2px;
 }
 
-/* ==================
-   ACCESSIBILITY
-   ================== */
+/* Prevent body scroll when mobile menu is open */
+body.menu-open {
+  overflow: hidden;
+}
 .skip-to-content {
   position: absolute;
   top: -40px;
@@ -607,8 +610,9 @@ section > p {
 }
 
 .reading-time::before {
-  content: '📖';
+  content: '📚';
   font-size: 1.1rem;
+  /* Icon for visual enhancement only, label provides text */
 }
 
 .post-content {
