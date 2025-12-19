@@ -11,10 +11,10 @@
 <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
 
 <!-- Open Graph Meta Tags -->
-<meta property="og:title" content="{{ page.title }} | {{ site.title }}">
-<meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+<meta property="og:title" content="{{ page. title }} | {{ site.title }}">
+<meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site. description }}{% endif %}">
 <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
-<meta property="og:url" content="{{ page.url | replace:'index.html','' | absolute_url }}">
+<meta property="og:url" content="{{ page.url | replace:'index. html','' | absolute_url }}">
 <meta property="og:site_name" content="{{ site.title }}">
 <meta property="og:locale" content="{{ site.locale }}">
 <meta property="og:image" content="{{ '/assets/img/logo.svg' | absolute_url }}">
@@ -22,19 +22,19 @@
 <!-- Twitter Card Meta Tags -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@SoludDev">
-<meta name="twitter:title" content="{{ page.title }} | {{ site.title }}">
+<meta name="twitter:title" content="{{ page. title }} | {{ site.title }}">
 <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-<meta name="twitter:image" content="{{ '/assets/img/logo.svg' | absolute_url }}">
+<meta name="twitter: image" content="{{ '/assets/img/logo. svg' | absolute_url }}">
 
 <!-- JSON-LD Structured Data for Local Business -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "{{ site.business.name }}",
+  "@type":  "LocalBusiness",
+  "name":  "{{ site.business. name }}",
   "description": "{{ site.description }}",
   "url": "{{ site.url }}",
-  "email": "{{ site.email }}",
+  "email": "{{ site. email }}",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "{{ site.business.city }}",
@@ -50,10 +50,14 @@
 
 <!-- Jekyll-safe asset variables -->
 <style>
-  :root {
+  : root {
     --forest-silhouette: url("{{ '/assets/img/forest-silhouette.svg' | relative_url }}");
   }
 </style>
+
+<!-- Preload critical assets -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
 <link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
@@ -64,11 +68,14 @@
 <!-- Skip to content link for screen readers -->
 <a href="#main-content" class="skip-to-content">Aller au contenu principal</a>
 
-<nav class="navbar fade-in" role="navigation" aria-label="Navigation principale">
-  <div class="brand">
-    <img src="{{ 'assets/img/logo.svg' | relative_url }}" alt="Logo Solud" class="logo">
+<!-- Cursor glow effect (optional, decorative) -->
+<div class="cursor-glow" aria-hidden="true"></div>
+
+<nav class="navbar" role="navigation" aria-label="Navigation principale">
+  <a href="{{ '/' | relative_url }}" class="brand">
+    <img src="{{ 'assets/img/logo.svg' | relative_url }}" alt="" class="logo" aria-hidden="true">
     <span>Solud</span>
-  </div>
+  </a>
   <button class="hamburger" id="mobile-menu-toggle" aria-label="Basculer le menu" aria-expanded="false">
     <span></span>
     <span></span>
@@ -84,18 +91,23 @@
   </div>
 </nav>
 
-<header class="hero fade-in" role="banner">
-  <div class="hero-overlay"></div>
-  <h1>Solutions TI à La Tuque</h1>
-  <p>La technologie ancrée dans la forêt — un soutien local, moderne et fiable.</p>
-  <a href="mailto:{{ site.email }}" class="btn btn-primary">Écrivez-nous</a>
+<header class="hero" role="banner">
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <h1><span>Solutions TI à La Tuque</span></h1>
+  <p>La technologie ancrée dans la forêt — un soutien local, moderne et fiable. </p>
+  <a href="mailto:{{ site.email }}" class="btn btn-primary btn-magnetic">
+    <span>Écrivez-nous</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </a>
 
   <div class="social-banner" role="navigation" aria-label="Réseaux sociaux">
-    <a href="{{ site.social.bluesky }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur BlueSky">
-      <img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky">
+    <a href="{{ site.social. bluesky }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur BlueSky">
+      <img src="{{ '/assets/img/bsky. svg' | relative_url }}" alt="">
     </a>
-    <a href="{{ site.social.twitter }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur X (Twitter)">
-      <img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X">
+    <a href="{{ site.social. twitter }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur X (Twitter)">
+      <img src="{{ '/assets/img/x.svg' | relative_url }}" alt="">
     </a>
   </div>
 </header>
@@ -105,99 +117,6 @@
 </main>
 
 <footer role="contentinfo">
-  <p>© {{ site.title }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+  <p>© {{ site.title }} — <a href="mailto: {{ site.email }}">{{ site.email }}</a></p>
   <div class="socials" role="navigation" aria-label="Liens vers réseaux sociaux">
-    <a href="{{ site.social.bluesky }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur BlueSky">
-      <img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky">
-    </a>
-    <a href="{{ site.social.twitter }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur X (Twitter)">
-      <img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X">
-    </a>
-  </div>
-</footer>
-
-<!-- Scroll to top button -->
-<button id="scroll-to-top" aria-label="Retour en haut de la page" title="Retour en haut">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="M12 19V5M5 12l7-7 7 7"/>
-  </svg>
-</button>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Theme toggle
-  const toggle = document.querySelector("#theme-toggle");
-  if (toggle) {
-    const updateTheme = (isDark) => {
-      document.documentElement.classList.toggle("dark", isDark);
-      toggle.setAttribute("aria-pressed", isDark ? "true" : "false");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
-    };
-    
-    toggle.onclick = () => {
-      const isDark = !document.documentElement.classList.contains("dark");
-      updateTheme(isDark);
-    };
-    
-    // Initialize theme
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    updateTheme(savedTheme === "dark" || (!savedTheme && prefersDark));
-  }
-
-  // Mobile menu toggle
-  const hamburger = document.querySelector("#mobile-menu-toggle");
-  const navMenu = document.querySelector("#nav-menu");
-  if (hamburger && navMenu) {
-    hamburger.onclick = () => {
-      const isOpen = hamburger.classList.toggle("active");
-      navMenu.classList.toggle("active");
-      document.body.classList.toggle("menu-open", isOpen);
-      hamburger.setAttribute("aria-expanded", isOpen);
-    };
-    
-    // Close menu when clicking nav links
-    navMenu.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        hamburger.classList.remove("active");
-        navMenu.classList.remove("active");
-        document.body.classList.remove("menu-open");
-        hamburger.setAttribute("aria-expanded", "false");
-      });
-    });
-  }
-
-  // Scroll to top button
-  const scrollBtn = document.querySelector("#scroll-to-top");
-  if (scrollBtn) {
-    const toggleScrollBtn = () => {
-      if (window.pageYOffset > 300) {
-        scrollBtn.classList.add("visible");
-      } else {
-        scrollBtn.classList.remove("visible");
-      }
-    };
-    
-    window.addEventListener("scroll", toggleScrollBtn);
-    scrollBtn.onclick = () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-  }
-
-  // Intersection observer for animations
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach((entry)=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  },{threshold:0.15});
-  
-  document.querySelectorAll(".fade-in,.slide-up,.card").forEach(el=>observer.observe(el));
-});
-</script>
-
-</body>
-</html>
-
+    <a href="{{ site.social. bluesky }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-
