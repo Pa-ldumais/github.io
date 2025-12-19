@@ -58,6 +58,10 @@
   --space-3xl:  4rem;
   --space-4xl: 6rem;
   
+  /* Container */
+  --container-max-width: 1280px;
+  --container-padding: var(--space-xl);
+  
   /* Typography */
   --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-heading: var(--font-body);
@@ -76,10 +80,10 @@
 . dark {
   --bg: #050a0f;
   --bg-gradient:  linear-gradient(135deg, #050a0f 0%, #0a1520 50%, #051510 100%);
-  --surface: rgba(255, 255, 255, 0.04);
+  --surface: rgba(255, 255, 255, 0.05);
   --surface-solid: #0d1520;
-  --surface-hover: rgba(255, 255, 255, 0.08);
-  --surface-elevated:  rgba(255, 255, 255, 0.06);
+  --surface-hover: rgba(255, 255, 255, 0.1);
+  --surface-elevated:  rgba(255, 255, 255, 0.08);
   --text: #f0f6fc;
   --text-secondary: #8b949e;
   --text-muted: #6e7681;
@@ -89,7 +93,7 @@
   --forest: #3fb950;
   --forest-light: #56d364;
   --forest-glow: rgba(63, 185, 80, 0.3);
-  --border: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.1);
   --border-hover: rgba(88, 166, 255, 0.4);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
   --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -126,6 +130,16 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   transition: background var(--transition), color var(--transition);
+}
+
+/* Container for consistent width alignment */
+.container {
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  width: 100%;
 }
 
 /* Animated Background Mesh */
@@ -298,16 +312,19 @@ body. menu-open {
   top:  0;
   left: 0;
   right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding:  var(--space-sm) var(--space-xl);
   background: var(--surface);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border);
   z-index: var(--z-sticky);
   transition: all var(--transition);
+  padding: var(--space-sm) 0;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Navbar glow on scroll */
@@ -525,9 +542,18 @@ body. menu-open {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: calc(80px + var(--space-2xl)) var(--space-xl) var(--space-3xl);
+  padding: calc(80px + var(--space-2xl)) 0 var(--space-3xl);
   position: relative;
   overflow: hidden;
+}
+
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 /* Animated Gradient Background */
@@ -875,9 +901,11 @@ main {
 }
 
 section {
-  padding:  var(--space-4xl) var(--space-xl);
+  padding:  var(--space-4xl) 0;
+}
+
+section .container {
   max-width: 1280px;
-  margin: 0 auto;
 }
 
 section h2 {
@@ -925,7 +953,7 @@ section > p {
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border:  1px solid var(--border);
   border-radius:  var(--radius-lg);
-  padding: var(--space-xl);
+  padding: var(--space-2xl);
   position: relative;
   overflow: hidden;
   transition: all var(--transition);
@@ -980,11 +1008,11 @@ section > p {
 }
 
 .card:hover {
-  transform: translateY(-12px) rotateX(2deg);
+  transform: translateY(-8px);
   box-shadow: 
-    0 25px 60px var(--shadow),
-    0 0 40px var(--sky-glow);
-  border-color: transparent;
+    0 20px 50px rgba(0, 0, 0, 0.12),
+    0 0 30px var(--sky-glow);
+  border-color: var(--border-hover);
 }
 
 . card:hover::before {
@@ -1045,15 +1073,15 @@ section > p {
    ================== */
 .contact-cta {
   text-align:  center;
-  padding: var(--space-3xl);
-  background: var(--surface);
+  padding: var(--space-4xl);
+  background: var(--surface-elevated);
   backdrop-filter:  blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   position: relative;
   overflow: hidden;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Animated gradient border */
@@ -1499,7 +1527,12 @@ footer .socials img {
 
 @media (max-width: 768px) {
   . navbar {
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-sm) 0;
+  }
+  
+  .navbar-container {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
   }
   
   .hamburger {
@@ -1551,7 +1584,12 @@ footer .socials img {
   
   .hero {
     min-height: 90vh;
-    padding: calc(60px + var(--space-xl)) var(--space-md) var(--space-2xl);
+    padding: calc(60px + var(--space-xl)) 0 var(--space-2xl);
+  }
+  
+  .hero-container {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
   }
   
   . hero h1 {
@@ -1559,7 +1597,12 @@ footer .socials img {
   }
   
   section {
-    padding:  var(--space-2xl) var(--space-md);
+    padding:  var(--space-2xl) 0;
+  }
+  
+  .container {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
   }
   
   .grid {
