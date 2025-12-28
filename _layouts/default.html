@@ -43,7 +43,8 @@
   },
   "sameAs": [
     "{{ site.social.bluesky }}",
-    "{{ site.social.twitter }}"
+    "{{ site.social.twitter }}",
+    "https://www.linkedin.com/company/soluddev/"
   ]
 }
 </script>
@@ -74,7 +75,7 @@
 <nav class="navbar" role="navigation" aria-label="Navigation principale">
   <div class="container navbar-container">
     <a href="{{ '/' | relative_url }}" class="brand">
-      <img src="{{ 'assets/img/logo.svg' | relative_url }}" alt="" class="logo" aria-hidden="true">
+      <img src="{{ 'assets/img/logo.svg' | relative_url }}" alt="Logo Solud" class="logo">
       <span>Solud</span>
     </a>
     <button class="hamburger" id="mobile-menu-toggle" aria-label="Basculer le menu" aria-expanded="false">
@@ -100,17 +101,20 @@
     <p>La technologie ancrée dans la forêt — un soutien local, moderne et fiable.</p>
     <a href="mailto:{{ site.email }}" class="btn btn-primary btn-magnetic">
       <span>Écrivez-nous</span>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </a>
 
     <div class="social-banner" role="navigation" aria-label="Réseaux sociaux">
       <a href="{{ site.social.bluesky }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur BlueSky">
-        <img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="">
+        <img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky">
       </a>
       <a href="{{ site.social.twitter }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur X (Twitter)">
-        <img src="{{ '/assets/img/x.svg' | relative_url }}" alt="">
+        <img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X (Twitter)">
+      </a>
+      <a href="https://www.linkedin.com/company/soluddev/" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur LinkedIn">
+        <img src="{{ '/assets/img/linkedin.svg' | relative_url }}" alt="LinkedIn">
       </a>
     </div>
   </div>
@@ -125,10 +129,13 @@
     <p>© {{ site.title }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
     <div class="socials" role="navigation" aria-label="Liens vers réseaux sociaux">
       <a href="{{ site.social.bluesky }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur BlueSky">
-        <img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="">
+        <img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky">
       </a>
       <a href="{{ site.social.twitter }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur X (Twitter)">
-        <img src="{{ '/assets/img/x.svg' | relative_url }}" alt="">
+        <img src="{{ '/assets/img/x.svg' | relative_url }}" alt="X (Twitter)">
+      </a>
+      <a href="https://www.linkedin.com/company/soluddev/" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur LinkedIn">
+        <img src="{{ '/assets/img/linkedin.svg' | relative_url }}" alt="LinkedIn">
       </a>
     </div>
   </div>
@@ -136,125 +143,192 @@
 
 <!-- Scroll to top button -->
 <button id="scroll-to-top" aria-label="Retour en haut de la page">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M12 19V5M5 12l7-7 7 7"/>
   </svg>
 </button>
 
 <script>
-// ==================
-// Theme Toggle
-// ==================
-const themeToggle = document.getElementById('theme-toggle');
-const html = document.documentElement;
+(function() {
+  'use strict';
 
-// Load saved theme preference
-try {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
+  // ==================
+  // Theme Toggle
+  // ==================
+  const themeToggle = document.getElementById('theme-toggle');
+  const html = document.documentElement;
+
+  // Check for saved theme preference or system preference
+  function getInitialTheme() {
+    try {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        return savedTheme;
+      }
+    } catch (e) {
+      console.warn('localStorage not available');
+    }
+    
+    // Check system preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    
+    return 'light';
+  }
+
+  // Apply initial theme
+  const initialTheme = getInitialTheme();
+  if (initialTheme === 'dark') {
     html.classList.add('dark');
     themeToggle.setAttribute('aria-pressed', 'true');
   }
-} catch (e) {
-  // localStorage not available
-  console.log('Theme preference not available');
-}
 
-themeToggle.addEventListener('click', () => {
-  html.classList.toggle('dark');
-  const isDark = html.classList.contains('dark');
-  themeToggle.setAttribute('aria-pressed', isDark);
-  try {
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  } catch (e) {
-    // localStorage not available
-  }
-});
-
-// ==================
-// Mobile Menu Toggle
-// ==================
-const hamburger = document.getElementById('mobile-menu-toggle');
-const navMenu = document.getElementById('nav-menu');
-const body = document.body;
-
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  navMenu.classList.toggle('active');
-  body.classList.toggle('menu-open');
-  const isExpanded = hamburger.classList.contains('active');
-  hamburger.setAttribute('aria-expanded', isExpanded);
-});
-
-// Close menu when clicking a link
-navMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-    body.classList.remove('menu-open');
-    hamburger.setAttribute('aria-expanded', 'false');
-  });
-});
-
-// ==================
-// Scroll to Top Button
-// ==================
-const scrollBtn = document.getElementById('scroll-to-top');
-
-window.addEventListener('scroll', () => {
-  if (window.pageYOffset > 300) {
-    scrollBtn.classList.add('visible');
-  } else {
-    scrollBtn.classList.remove('visible');
-  }
-});
-
-scrollBtn.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-});
-
-// ==================
-// Intersection Observer for Animations
-// ==================
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
+  // Theme toggle handler
+  themeToggle.addEventListener('click', function() {
+    html.classList.toggle('dark');
+    const isDark = html.classList.contains('dark');
+    themeToggle.setAttribute('aria-pressed', String(isDark));
+    
+    try {
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    } catch (e) {
+      console.warn('Unable to save theme preference');
     }
   });
-}, observerOptions);
 
-// Observe elements with animation classes
-document.querySelectorAll('.fade-in, .slide-up, .scale-in, .card').forEach(el => {
-  observer.observe(el);
-});
+  // ==================
+  // Mobile Menu Toggle
+  // ==================
+  const hamburger = document.getElementById('mobile-menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  const body = document.body;
 
-// ==================
-// Magnetic Button Effect (Optional Enhancement)
-// ==================
-const magneticButtons = document.querySelectorAll('.btn-magnetic');
+  if (hamburger && navMenu) {
+    hamburger.addEventListener('click', function() {
+      const isActive = hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      body.classList.toggle('menu-open');
+      hamburger.setAttribute('aria-expanded', String(isActive));
+    });
 
-magneticButtons.forEach(btn => {
-  btn.addEventListener('mousemove', (e) => {
-    const rect = btn.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
+    // Close menu when clicking a link
+    navMenu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        body.classList.remove('menu-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('active')) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        body.classList.remove('menu-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        body.classList.remove('menu-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.focus();
+      }
+    });
+  }
+
+  // ==================
+  // Scroll to Top Button
+  // ==================
+  const scrollBtn = document.getElementById('scroll-to-top');
+  let scrollTimeout;
+
+  if (scrollBtn) {
+    window.addEventListener('scroll', function() {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(function() {
+        if (window.pageYOffset > 300) {
+          scrollBtn.classList.add('visible');
+        } else {
+          scrollBtn.classList.remove('visible');
+        }
+      }, 100);
+    }, { passive: true });
+
+    scrollBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+
+  // ==================
+  // Intersection Observer for Animations
+  // ==================
+  if ('IntersectionObserver' in window) {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe elements with animation classes
+    document.querySelectorAll('.fade-in, .slide-up, .scale-in, .card').forEach(function(el) {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback for browsers without IntersectionObserver
+    document.querySelectorAll('.fade-in, .slide-up, .scale-in, .card').forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }
+
+  // ==================
+  // Magnetic Button Effect
+  // ==================
+  const magneticButtons = document.querySelectorAll('.btn-magnetic');
+
+  magneticButtons.forEach(function(btn) {
+    btn.addEventListener('mousemove', function(e) {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      btn.style.transform = 'translate(' + (x * 0.2) + 'px, ' + (y * 0.2) + 'px)';
+    });
     
-    btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+    btn.addEventListener('mouseleave', function() {
+      btn.style.transform = 'translate(0, 0)';
+    });
   });
-  
-  btn.addEventListener('mouseleave', () => {
-    btn.style.transform = 'translate(0, 0)';
-  });
-});
+
+  // ==================
+  // Performance: Reduce Motion for Users Who Prefer It
+  // ==================
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('*').forEach(function(el) {
+      el.style.animationDuration = '0.01ms';
+      el.style.transitionDuration = '0.01ms';
+    });
+  }
+
+})();
 </script>
 
 </body>
