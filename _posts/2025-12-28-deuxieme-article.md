@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Cybersécurité : protéger votre PME des menaces actuelles
+title: "Cybersécurité : protéger votre PME des menaces actuelles"
 date: 2025-12-15
 author: Équipe Solud
 categories: [Sécurité, Protection]
 tags: [PME, cybersécurité, ransomware, La Tuque]
-excerpt: Les cyberattaques ne visent plus seulement les grandes entreprises. Découvrez comment protéger efficacement votre PME de La Tuque contre les menaces numériques croissantes.
+excerpt: "Les cyberattaques ne visent plus seulement les grandes entreprises. Découvrez comment protéger efficacement votre PME de La Tuque contre les menaces numériques croissantes."
 ---
 
 ## La cybersécurité : un enjeu vital pour les PME
