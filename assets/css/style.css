@@ -611,6 +611,7 @@ main#main-content a:hover {
   transition: all var(--transition);
   opacity: 0;
   transform: translateY(60px);
+  text-align: center;
 }
 
 .card.visible {
@@ -634,6 +635,53 @@ main#main-content a:hover {
   color: var(--text-secondary);
   margin: 0;
   line-height: 1.7;
+}
+
+/* Fix for expertise/services section images */
+.card img,
+.expertise-section img,
+.services-section img {
+  max-width: 64px;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin: 0 auto var(--space-md);
+  display: block;
+  transition: transform var(--transition);
+}
+
+.card:hover img {
+  transform: scale(1.1) translateY(-4px);
+}
+
+/* Alternative styling for icon containers */
+.card .icon-container,
+.expertise-icon,
+.service-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--sky-glow), var(--forest-glow));
+  border-radius: var(--radius);
+  transition: all var(--transition);
+}
+
+.card:hover .icon-container,
+.card:hover .expertise-icon,
+.card:hover .service-icon {
+  transform: scale(1.1) translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 119, 255, 0.2);
+}
+
+.icon-container img,
+.expertise-icon img,
+.service-icon img {
+  width: 36px;
+  height: 36px;
+  margin: 0;
 }
 
 /* ==================== FOOTER ==================== */
@@ -861,6 +909,14 @@ footer a:hover {
   .social-banner img {
     width: 24px;
     height: 24px;
+  }
+  
+  .card img,
+  .expertise-section img,
+  .services-section img {
+    max-width: 56px;
+    width: 56px;
+    height: 56px;
   }
 }
 
