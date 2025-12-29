@@ -126,7 +126,14 @@
 
 <footer role="contentinfo">
   <div class="container footer-container">
-    <p>© {{ site.title }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+    <div class="footer-left">
+      <p>© {{ site.title }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+      <p class="footer-links">
+        <a href="{{ '/confidentialite' | relative_url }}">Confidentialité</a>
+        <span aria-hidden="true">•</span>
+        <a href="{{ '/confidentialite' | relative_url }}#conditions">Conditions d'utilisation</a>
+      </p>
+    </div>
     <div class="socials" role="navigation" aria-label="Liens vers réseaux sociaux">
       <a href="{{ site.social.bluesky }}" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur BlueSky">
         <img src="{{ '/assets/img/bsky.svg' | relative_url }}" alt="BlueSky">
@@ -137,7 +144,6 @@
       <a href="https://www.linkedin.com/company/soluddev/" target="_blank" rel="noopener noreferrer" aria-label="Suivez-nous sur LinkedIn">
         <img src="{{ '/assets/img/linkedin.svg' | relative_url }}" alt="LinkedIn">
       </a>
-      <a href="{{ '/confidentialite' | relative_url }}">Confidentialité</a>
     </div>
   </div>
 </footer>
