@@ -183,7 +183,7 @@ Ces conditions constituent l'intégralité de l'accord entre vous et Solud conce
 Pour toute question concernant cette politique de confidentialité ou ces conditions d'utilisation, veuillez nous contacter :
 
 **Solud - Solutions TI à La Tuque**  
-Courriel : [contact@solud.dev]  
+Courriel : contact@solud.dev  
 La Tuque, Québec, Canada
 
 Nous nous efforçons de répondre à toutes les demandes dans un délai raisonnable.
