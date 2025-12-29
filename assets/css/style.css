@@ -481,6 +481,8 @@ a:not(.btn):not(.brand):not(.nav-right a):hover {
 main {
   position: relative;
   z-index: 1;
+  padding-top: 80px;
+  min-height: 100vh;
 }
 
 section {
@@ -507,6 +509,87 @@ section > p {
   max-width: 700px;
   margin: 0 auto var(--space-2xl);
   font-size: 1.125rem;
+}
+
+/* ==================== CONTENT PAGES (Privacy, etc) ==================== */
+main#main-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-4xl) var(--space-xl);
+}
+
+main#main-content h1 {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 3px solid var(--border);
+}
+
+main#main-content h2 {
+  margin-top: var(--space-3xl);
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--border);
+  text-align: left;
+}
+
+main#main-content h2::after {
+  display: none;
+}
+
+main#main-content h3 {
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-md);
+  color: var(--sky);
+}
+
+main#main-content h4 {
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-sm);
+  font-size: 1.1rem;
+  color: var(--forest);
+}
+
+main#main-content p {
+  text-align: left;
+  max-width: none;
+  margin-bottom: var(--space-lg);
+  line-height: 1.8;
+}
+
+main#main-content ul,
+main#main-content ol {
+  margin-left: var(--space-xl);
+  margin-bottom: var(--space-lg);
+  color: var(--text-secondary);
+}
+
+main#main-content li {
+  margin-bottom: var(--space-sm);
+  line-height: 1.8;
+}
+
+main#main-content strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+main#main-content hr {
+  border: none;
+  border-top: 2px solid var(--border);
+  margin: var(--space-3xl) 0;
+  opacity: 0.5;
+}
+
+main#main-content a {
+  color: var(--sky);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--transition-fast);
+}
+
+main#main-content a:hover {
+  text-decoration-color: var(--sky);
 }
 
 /* ==================== GRID ==================== */
