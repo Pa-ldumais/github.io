@@ -60,8 +60,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
-<link rel="icon" type="image/svg+xml" href="{{ 'assets/img/favicon.svg' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/img/favicon.svg' | relative_url }}">
 </head>
 
 <body>
@@ -75,7 +75,7 @@
 <nav class="navbar" role="navigation" aria-label="Navigation principale">
   <div class="container navbar-container">
     <a href="{{ '/' | relative_url }}" class="brand">
-      <img src="{{ 'assets/img/logo.svg' | relative_url }}" alt="Logo Solud" class="logo">
+      <img src="{{ '/assets/img/logo.svg' | relative_url }}" alt="Logo Solud" class="logo">
       <span>Solud</span>
     </a>
     <button class="hamburger" id="mobile-menu-toggle" aria-label="Basculer le menu" aria-expanded="false">
@@ -127,7 +127,7 @@
 <footer role="contentinfo">
   <div class="container footer-container">
     <div class="footer-left">
-      <p>© {{ site.title }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+      <p>&copy; {{ site.title }} — <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
       <p class="footer-links">
         <a href="{{ '/confidentialite' | relative_url }}">Confidentialité</a>
       </p>
@@ -158,23 +158,51 @@
   'use strict';
 
   // ==================
+  // Utility Functions
+  // ==================
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction() {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(function() {
+        func.apply(context, args);
+      }, wait);
+    };
+  }
+
+  function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+      const context = this;
+      const args = arguments;
+      if (!inThrottle) {
+        func.apply(context, args);
+        inThrottle = true;
+        setTimeout(function() {
+          inThrottle = false;
+        }, limit);
+      }
+    };
+  }
+
+  // ==================
   // Theme Toggle
   // ==================
   const themeToggle = document.getElementById('theme-toggle');
   const html = document.documentElement;
 
-  // Check for saved theme preference or system preference
   function getInitialTheme() {
     try {
       const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
+      if (savedTheme === 'dark' || savedTheme === 'light') {
         return savedTheme;
       }
     } catch (e) {
-      console.warn('localStorage not available');
+      console.warn('localStorage not available:', e.message);
     }
     
-    // Check system preference
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark';
     }
@@ -182,25 +210,36 @@
     return 'light';
   }
 
-  // Apply initial theme
-  const initialTheme = getInitialTheme();
-  if (initialTheme === 'dark') {
-    html.classList.add('dark');
-    themeToggle.setAttribute('aria-pressed', 'true');
+  function applyTheme(theme) {
+    const isDark = theme === 'dark';
+    if (isDark) {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+    }
   }
 
+  // Apply initial theme
+  const initialTheme = getInitialTheme();
+  applyTheme(initialTheme);
+
   // Theme toggle handler
-  themeToggle.addEventListener('click', function() {
-    html.classList.toggle('dark');
-    const isDark = html.classList.contains('dark');
-    themeToggle.setAttribute('aria-pressed', String(isDark));
-    
-    try {
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    } catch (e) {
-      console.warn('Unable to save theme preference');
-    }
-  });
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      const isDark = html.classList.contains('dark');
+      const newTheme = isDark ? 'light' : 'dark';
+      applyTheme(newTheme);
+      
+      try {
+        localStorage.setItem('theme', newTheme);
+      } catch (e) {
+        console.warn('Unable to save theme preference:', e.message);
+      }
+    });
+  }
 
   // ==================
   // Mobile Menu Toggle
@@ -209,41 +248,45 @@
   const navMenu = document.getElementById('nav-menu');
   const body = document.body;
 
-  if (hamburger && navMenu) {
-    hamburger.addEventListener('click', function() {
+  function closeMenu() {
+    if (hamburger && navMenu) {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      body.classList.remove('menu-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function toggleMenu() {
+    if (hamburger && navMenu) {
       const isActive = hamburger.classList.toggle('active');
       navMenu.classList.toggle('active');
       body.classList.toggle('menu-open');
       hamburger.setAttribute('aria-expanded', String(isActive));
-    });
+    }
+  }
+
+  if (hamburger && navMenu) {
+    hamburger.addEventListener('click', toggleMenu);
 
     // Close menu when clicking a link
     navMenu.querySelectorAll('a').forEach(function(link) {
-      link.addEventListener('click', function() {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-        body.classList.remove('menu-open');
-        hamburger.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', closeMenu);
     });
 
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
-      if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('active')) {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-        body.classList.remove('menu-open');
-        hamburger.setAttribute('aria-expanded', 'false');
+      if (!navMenu.contains(e.target) && 
+          !hamburger.contains(e.target) && 
+          navMenu.classList.contains('active')) {
+        closeMenu();
       }
     });
 
     // Close menu on escape key
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-        body.classList.remove('menu-open');
-        hamburger.setAttribute('aria-expanded', 'false');
+        closeMenu();
         hamburger.focus();
       }
     });
@@ -253,19 +296,17 @@
   // Scroll to Top Button
   // ==================
   const scrollBtn = document.getElementById('scroll-to-top');
-  let scrollTimeout;
 
   if (scrollBtn) {
-    window.addEventListener('scroll', function() {
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(function() {
-        if (window.pageYOffset > 300) {
-          scrollBtn.classList.add('visible');
-        } else {
-          scrollBtn.classList.remove('visible');
-        }
-      }, 100);
-    }, { passive: true });
+    const handleScroll = throttle(function() {
+      if (window.pageYOffset > 300) {
+        scrollBtn.classList.add('visible');
+      } else {
+        scrollBtn.classList.remove('visible');
+      }
+    }, 100);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     scrollBtn.addEventListener('click', function() {
       window.scrollTo({
@@ -294,12 +335,14 @@
     }, observerOptions);
 
     // Observe elements with animation classes
-    document.querySelectorAll('.fade-in, .slide-up, .scale-in, .card').forEach(function(el) {
+    const animatedElements = document.querySelectorAll('.fade-in, .slide-up, .scale-in, .card');
+    animatedElements.forEach(function(el) {
       observer.observe(el);
     });
   } else {
     // Fallback for browsers without IntersectionObserver
-    document.querySelectorAll('.fade-in, .slide-up, .scale-in, .card').forEach(function(el) {
+    const animatedElements = document.querySelectorAll('.fade-in, .slide-up, .scale-in, .card');
+    animatedElements.forEach(function(el) {
       el.classList.add('visible');
     });
   }
@@ -309,29 +352,48 @@
   // ==================
   const magneticButtons = document.querySelectorAll('.btn-magnetic');
 
-  magneticButtons.forEach(function(btn) {
-    btn.addEventListener('mousemove', function(e) {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
+  if (magneticButtons.length > 0 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    magneticButtons.forEach(function(btn) {
+      btn.addEventListener('mousemove', function(e) {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        btn.style.transform = 'translate(' + (x * 0.2) + 'px, ' + (y * 0.2) + 'px)';
+      });
       
-      btn.style.transform = 'translate(' + (x * 0.2) + 'px, ' + (y * 0.2) + 'px)';
+      btn.addEventListener('mouseleave', function() {
+        btn.style.transform = 'translate(0, 0)';
+      });
     });
-    
-    btn.addEventListener('mouseleave', function() {
-      btn.style.transform = 'translate(0, 0)';
-    });
-  });
+  }
 
   // ==================
   // Performance: Reduce Motion for Users Who Prefer It
   // ==================
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('*').forEach(function(el) {
-      el.style.animationDuration = '0.01ms';
-      el.style.transitionDuration = '0.01ms';
-    });
+    const style = document.createElement('style');
+    style.textContent = `
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    `;
+    document.head.appendChild(style);
   }
+
+  // ==================
+  // Error Handling for Images
+  // ==================
+  document.querySelectorAll('img').forEach(function(img) {
+    img.addEventListener('error', function() {
+      console.warn('Failed to load image:', img.src);
+      // You could set a fallback image here if desired
+      // img.src = '/assets/img/placeholder.svg';
+    });
+  });
 
 })();
 </script>
