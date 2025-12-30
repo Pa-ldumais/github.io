@@ -30,16 +30,30 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "{{ site.business.name }}",
-  "description": "{{ site.description }}",
-  "url": "{{ site.url }}",
-  "email": "{{ site.email }}",
+  "@type": "ProfessionalService",
+  "@id": "https://solud.dev/#business",
+  "name": "Solud",
+  "description": "Services TI professionnels à La Tuque : support informatique, cybersécurité et réseaux.",
+  "url": "https://solud.dev",
+  "logo": "https://solud.dev/assets/img/logo.png",
+  "image": "https://solud.dev/assets/img/og-cover.jpg",
+  "email": "contact@solud.dev",
   "address": {
     "@type": "PostalAddress",
-    "addressLocality": "{{ site.business.city }}",
-    "addressRegion": "{{ site.business.region }}",
-    "addressCountry": "{{ site.business.country }}"
+    "addressLocality": "La Tuque",
+    "addressRegion": "QC",
+    "addressCountry": "CA"
+  },
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Mauricie, Québec"
+  },
+  "knowsLanguage": ["fr-CA", "en-CA"],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "email": "contact@solud.dev",
+    "availableLanguage": ["French", "English"]
   },
   "sameAs": [
     "https://bsky.app/profile/solud.dev",
@@ -48,6 +62,7 @@
   ]
 }
 </script>
+
 
 <!-- Jekyll-safe asset variables -->
 <style>
