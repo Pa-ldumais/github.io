@@ -39,3 +39,27 @@ Plugins utilisés (officiels GitHub Pages) :
 
 ## 📁 Structure du dépôt
 
+.
+├── _layouts/ # Layouts HTML
+├── _posts/ # Articles / actualités
+├── assets/
+│ ├── css/
+│ ├── js/
+│ └── images/
+├── _config.yml # Configuration Jekyll
+├── index.md # Page d’accueil
+├── services.md # Services offerts
+├── actualites.md # Liste des articles
+├── confidentialite.md # Politique de confidentialité
+└── README.md
+
+---
+
+## 🚀 Déploiement
+
+Le site est automatiquement déployé via **GitHub Pages** à chaque push sur la branche principale.
+
+Aucune action manuelle requise.
+
+---
+
