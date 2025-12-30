@@ -1,35 +1,116 @@
+# =========================
+# Site identity
+# =========================
 title: Solud
-description: Services TI professionnels à La Tuque — support informatique, cybersécurité et réseaux
-baseurl: ""
-url: "https://solud.dev"
-author: "Pierre-Alexandre"
-email: "contact@solud.dev"
-locale: "fr_CA"
-markdown: kramdown
+description: >
+  Services TI professionnels à La Tuque —
+  support informatique, cybersécurité et réseaux.
+author: Pierre-Alexandre
+email: contact@solud.dev
 
-# Reading time calculation (words per minute)
+url: "https://solud.dev"
+baseurl: ""
+permalink: /:title/
+
+locale: fr_CA
+timezone: America/Toronto
+encoding: utf-8
+
+# =========================
+# Build & Markdown
+# =========================
+markdown: kramdown
+highlighter: rouge
+
+safe: true
+incremental: false
+lsi: false
+
+# Reading time (custom use in templates)
 reading_speed: 200
 
-# Social Media
-social:
-  bluesky: "https://bsky.app/profile/solud.dev"
-  twitter: "https://x.com/SoludDev"
+# =========================
+# Theme
+# =========================
+remote_theme: pages-themes/minimal@v0.2.0
 
-# Business Info
+# =========================
+# GitHub Pages–approved plugins
+# =========================
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# =========================
+# SEO & Social
+# =========================
+seo:
+  type: LocalBusiness
+  name: Solud
+
+social:
+  name: Solud
+  links:
+    - https://bsky.app/profile/solud.dev
+    - https://x.com/SoludDev
+    - https://www.linkedin.com/company/soluddev/
+    - https://github.com/Pa-ldumais
+
+twitter:
+  card: summary_large_image
+  username: SoludDev
+
+# =========================
+# Business metadata
+# =========================
 business:
-  name: "Solud"
-  city: "La Tuque"
-  region: "Québec"
-  country: "Canada"
+  name: Solud
+  city: La Tuque
+  region: Québec
+  country: Canada
   phone: ""
 
+# =========================
+# Collections
+# =========================
 collections:
   posts:
     output: true
+    permalink: /actualites/:title/
 
+# =========================
+# Defaults
+# =========================
 defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+      lang: fr
   - scope:
       path: ""
       type: posts
     values:
       layout: post
+      author: Pierre-Alexandre
+
+# =========================
+# Assets & performance
+# =========================
+sass:
+  style: compressed
+
+# =========================
+# Exclusions
+# =========================
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - package.json
+  - package-lock.json
+  - .github
+  - .vscode
